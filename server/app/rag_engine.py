@@ -16,6 +16,7 @@ Key concepts:
 
 from typing import List, Dict, Optional
 import os
+from app.config import settings
 from app.vector_store import search_similar_documents
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
@@ -38,16 +39,15 @@ def initialize_llm(provider: Optional[str] = None, api_key: Optional[str] = None
     Returns:
         LangChain LLM instance (unified interface for all providers)
     """
-    provider = provider or os.getenv("LLM_PROVIDER", "gemini").lower()
+    provider = provider or settings.LLM_PROVIDER.lower()
     
     if provider == "gemini":
-        api_key = api_key or os.getenv("GEMINI_API_KEY")
+        api_key = api_key or settings.GEMINI_API_KEY
         if not api_key:
             raise ValueError("GEMINI_API_KEY environment variable is required. Get your API key from https://makersuite.google.com/app/apikey")
         
-        # Get model name from env or use default
-        # Common working models: "gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"
-        model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+        # Get model name from settings
+        model_name = settings.GEMINI_MODEL
         
         # Remove "models/" prefix if present (LangChain adds it automatically)
         if model_name.startswith("models/"):
@@ -57,7 +57,7 @@ def initialize_llm(provider: Optional[str] = None, api_key: Optional[str] = None
             return ChatGoogleGenerativeAI(
                 model=model_name,
                 google_api_key=api_key,
-                temperature=0.7,
+                temperature=settings.LLM_TEMPERATURE,
                 convert_system_message_to_human=True  # Gemini doesn't support system messages
             )
         except Exception as e:
@@ -74,7 +74,7 @@ def initialize_llm(provider: Optional[str] = None, api_key: Optional[str] = None
                             return ChatGoogleGenerativeAI(
                                 model=fallback,
                                 google_api_key=api_key,
-                                temperature=0.7,
+                                temperature=settings.LLM_TEMPERATURE,
                                 convert_system_message_to_human=True
                             )
                         except:
@@ -91,13 +91,13 @@ def initialize_llm(provider: Optional[str] = None, api_key: Optional[str] = None
                 raise
     
     elif provider == "openai":
-        api_key = api_key or os.getenv("OPENAI_API_KEY")
+        api_key = api_key or settings.OPENAI_API_KEY
         if not api_key:
             raise ValueError("OPENAI_API_KEY environment variable is required")
         return ChatOpenAI(
-            model="gpt-3.5-turbo",
+            model=settings.OPENAI_MODEL,
             api_key=api_key,
-            temperature=0.7
+            temperature=settings.LLM_TEMPERATURE
         )
     else:
         raise ValueError(f"Unknown LLM provider: {provider}. Choose from: gemini, openai, anthropic, ollama")

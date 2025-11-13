@@ -10,17 +10,23 @@ RAG combines **Retrieval** (finding relevant information) with **Augmented Gener
 
 ```
 RAG-chat-bot/
-├── app/
+├── app/                     # Backend (FastAPI)
 │   ├── main.py              # FastAPI application
+│   ├── config.py            # Configuration (Pydantic Settings)
 │   ├── models.py            # Pydantic models
 │   ├── rag_engine.py        # Core RAG logic
 │   ├── embeddings.py        # Text embeddings
 │   ├── vector_store.py      # Vector database
 │   └── document_loader.py   # Document processing
+├── frontend/                 # Frontend (Next.js)
+│   ├── app/                 # Next.js app directory
+│   ├── components/          # shadcn/ui components
+│   └── lib/                 # RTK Query store
 ├── data/
 │   └── documents/           # Place your documents here
 ├── vector_db/               # Vector database storage
-└── requirements.txt
+├── requirements.txt         # Python dependencies
+└── .env.example             # Environment variables template
 ```
 
 ## Setup Instructions
@@ -37,18 +43,24 @@ Copy `.env.example` to `.env` and fill in your API keys:
 
 ```bash
 cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY
+# Edit .env and add your GEMINI_API_KEY (or other LLM provider key)
 ```
+
+Required variables:
+- `GEMINI_API_KEY` - Get from https://makersuite.google.com/app/apikey
+- `GEMINI_MODEL` - Default: `gemini-2.5-flash-lite`
 
 ### 3. Add Documents
 
 Place your text files in `data/documents/` directory.
 
-### 4. Run the Application
+### 4. Run the Backend
 
 ```bash
-python -m app.main
-# Or
+# Activate virtual environment
+source venv/bin/activate
+
+# Run the FastAPI server
 uvicorn app.main:app --reload
 ```
 
@@ -56,6 +68,18 @@ The API will be available at `http://localhost:8000`
 
 - API Documentation: `http://localhost:8000/docs`
 - Health Check: `http://localhost:8000/health`
+
+### 5. Run the Frontend (Optional)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+**Note**: Make sure the backend is running before using the frontend.
 
 ## Learning Path
 

@@ -12,6 +12,7 @@ Hints:
 - Include API documentation
 """
 
+from app.config import settings
 from app.document_loader import (
     process_documents, 
     process_uploaded_file, 
@@ -29,16 +30,6 @@ import os
 import uuid
 from datetime import datetime
 from pathlib import Path
-from dotenv import load_dotenv
-
-# Import your modules (uncomment as you implement them)
-# from app.models import ChatRequest, ChatResponse
-# from app.rag_engine import initialize_llm, rag_pipeline
-# from app.vector_store import initialize_vector_store
-# from app.embeddings import initialize_embedding_model
-# from app.document_loader import process_documents
-
-load_dotenv()
 
 app = FastAPI(
     title="RAG Chat Bot",
@@ -47,9 +38,10 @@ app = FastAPI(
 )
 
 # CORS middleware (allows frontend to call API)
+cors_origins = settings.CORS_ORIGINS.split(",") if settings.CORS_ORIGINS != "*" else ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -67,13 +59,11 @@ async def startup_event():
     """
     global vector_store_collection, embedding_model, llm_client
     
-    # TODO: Implement startup initialization
-    # 1. Initialize vector store
-    # 2. Initialize embedding model
-    # 3. Initialize LLM client
-    # 4. Load existing documents if any
-    client, vector_store_collection = initialize_vector_store()
-    embedding_model = initialize_embedding_model()
+    # Initialize vector store
+    client, vector_store_collection = initialize_vector_store(persist_directory=settings.VECTOR_DB_PATH)
+    # Initialize embedding model
+    embedding_model = initialize_embedding_model(model_name=settings.EMBEDDING_MODEL)
+    # Initialize LLM client
     llm_client = initialize_llm()
 
 @app.get("/health")
@@ -98,7 +88,9 @@ async def chat(request: ChatRequest):
             request.message, 
             vector_store_collection, 
             embedding_model, 
-            llm_client
+            llm_client,
+            top_k=settings.TOP_K_RETRIEVAL,
+            temperature=settings.LLM_TEMPERATURE
         )
         return ChatResponse(
             response=response["response"], 
@@ -249,7 +241,12 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        app, 
+        host=settings.API_HOST, 
+        port=settings.API_PORT,
+        reload=settings.API_RELOAD
+    )
 
 
 

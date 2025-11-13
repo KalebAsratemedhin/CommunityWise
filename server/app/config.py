@@ -1,0 +1,53 @@
+"""
+Application configuration using Pydantic Settings.
+
+This module provides centralized configuration management with validation.
+All environment variables are defined here with their defaults and descriptions.
+"""
+
+from pydantic_settings import BaseSettings
+from typing import Optional
+
+
+class Settings(BaseSettings):
+    """Application settings loaded from environment variables."""
+    
+    # LLM Configuration
+    LLM_PROVIDER: str = "gemini"
+    GEMINI_API_KEY: Optional[str] = None
+    GEMINI_MODEL: str = "gemini-2.5-flash-lite"
+    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_MODEL: str = "gpt-3.5-turbo"
+    ANTHROPIC_API_KEY: Optional[str] = None
+    ANTHROPIC_MODEL: str = "claude-3-sonnet-20240229"
+    OLLAMA_MODEL: str = "llama2"
+    
+    # Embedding Configuration
+    EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
+    
+    # Vector Database Configuration
+    VECTOR_DB_PATH: str = "./vector_db"
+    
+    # RAG Configuration
+    CHUNK_SIZE: int = 1000
+    CHUNK_OVERLAP: int = 200
+    TOP_K_RETRIEVAL: int = 3
+    LLM_TEMPERATURE: float = 0.7
+    
+    # API Configuration
+    API_HOST: str = "0.0.0.0"
+    API_PORT: int = 8000
+    API_RELOAD: bool = False
+    
+    # CORS Configuration
+    CORS_ORIGINS: str = "*"  # Comma-separated list or "*" for all
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+        case_sensitive = False
+
+
+# Global settings instance
+settings = Settings()
+

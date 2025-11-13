@@ -9,7 +9,7 @@ langchain>=0.1.0
 langchain-community>=0.0.10
 # LLM Providers (install the ones you want to use)
 langchain-google-genai>=1.0.0  # For Gemini
-# langchain-openai>=0.0.5  # For OpenAI (uncomment if needed)
+langchain-openai>=0.0.5  # For OpenAI (uncomment if needed)
 # langchain-anthropic>=0.1.0  # For Claude (uncomment if needed)
 
 # Vector Database
