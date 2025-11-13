@@ -1,0 +1,40 @@
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# RAG & LLM - LangChain for easy model switching
+langchain>=0.1.0
+langchain-community>=0.0.10
+# LLM Providers (install the ones you want to use)
+langchain-google-genai>=1.0.0  # For Gemini
+# langchain-openai>=0.0.5  # For OpenAI (uncomment if needed)
+# langchain-anthropic>=0.1.0  # For Claude (uncomment if needed)
+
+# Vector Database
+chromadb==0.4.18
+
+# Embeddings
+# Note: sentence-transformers requires PyTorch (large package ~900MB)
+# Install PyTorch separately first: pip install torch --index-url https://download.pytorch.org/whl/cpu
+# Using version 5.1.2+ for compatibility with huggingface_hub
+sentence-transformers>=5.1.0
+
+# Document Processing
+pypdf2==3.0.1
+python-docx==1.1.0
+
+# Utilities
+python-dotenv==1.0.0
+pydantic-settings==2.1.0
+
+# Optional: For local LLM (if using Ollama)
+# ollama==0.1.5
+
+
+
+
+
+
+
