@@ -5,13 +5,20 @@ This module provides centralized configuration management with validation.
 All environment variables are defined here with their defaults and descriptions.
 """
 
-from pydantic_settings import BaseSettings
 from typing import Optional
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
-    
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
     # LLM Configuration
     LLM_PROVIDER: str = "gemini"
     GEMINI_API_KEY: Optional[str] = None
@@ -40,14 +47,15 @@ class Settings(BaseSettings):
     API_RELOAD: bool = False
     
     # CORS Configuration
-    CORS_ORIGINS: str = "*"  # Comma-separated list or "*" for all
-    
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
+    CORS_ORIGINS: str = "*"
+
+    # AWS / S3 configuration (values come from environment)
+    AWS_ACCESS_KEY_ID: Optional[str] = None
+    AWS_SECRET_ACCESS_KEY: Optional[str] = None
+    AWS_REGION: str = "us-east-1"
+
+    S3_BUCKET_NAME: Optional[str] = None
+    S3_PREFIX: str = "uploads/"
 
 
-# Global settings instance
 settings = Settings()
-

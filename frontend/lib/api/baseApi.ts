@@ -12,11 +12,7 @@ export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: getBaseUrl(),
-    prepareHeaders: (headers) => {
-      // Add any common headers here if needed
-      headers.set('Content-Type', 'application/json');
-      return headers;
-    },
+    // Note: do NOT force Content-Type here so that FormData uploads work.
   }),
   tagTypes: ['Chat', 'Document'],
   endpoints: () => ({}), // Endpoints will be injected by other API slices

@@ -32,7 +32,7 @@ pydantic-settings==2.1.0
 # Optional: For local LLM (if using Ollama)
 # ollama==0.1.5
 
-
+boto3
 
 
 

@@ -205,3 +205,13 @@
 .prose th {
   @apply bg-gray-700 font-semibold;
 }
+
+/* Utility to hide native scrollbars while keeping scroll behavior */
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
