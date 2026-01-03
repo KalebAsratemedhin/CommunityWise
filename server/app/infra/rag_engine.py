@@ -105,20 +105,39 @@ def format_prompt_with_context(
     """
     Format the prompt with retrieved context using LangChain's prompt template.
     """
-    context_text = "\n\n".join(chunk["content"] for chunk in context_chunks)
+    # Format context with better structure and source information
+    context_parts = []
+    for idx, chunk in enumerate(context_chunks, 1):
+        metadata = chunk.get("metadata", {})
+        source = metadata.get("source", "unknown")
+        content_type = metadata.get("type", "document")
+        
+        # Format based on content type with clear labels
+        if content_type == "qa_pair":
+            context_parts.append(f"[Q&A Information]\n{chunk['content']}")
+        elif content_type == "question":
+            context_parts.append(f"[Question]\n{chunk['content']}")
+        elif content_type == "answer":
+            context_parts.append(f"[Answer]\n{chunk['content']}")
+        else:
+            context_parts.append(f"[Document: {source}]\n{chunk['content']}")
+    
+    context_text = "\n\n---\n\n".join(context_parts)
 
     if use_system_message:
         prompt_template = ChatPromptTemplate.from_messages(
             [
                 (
                     "system",
-                    "You are a helpful assistant that answers questions based on the provided context. "
-                    "The context may include documents, questions, and answers from a Q&A system. "
-                    "Use all relevant information from the context to provide a comprehensive answer. "
-                    "If the context contains relevant information, use it to answer the question. "
-                    "Only say you don't know if the context truly doesn't contain relevant information.",
+                    "You are a helpful assistant that answers questions using the provided context. "
+                    "The context contains relevant information from documents and Q&A discussions. "
+                    "Your task is to extract and synthesize information from the context to answer the user's question. "
+                    "If the context mentions places, recommendations, or answers related to the question, provide that information. "
+                    "Be helpful and extract all relevant details from the context, even if they're phrased differently than the question."
+                    "If you don't have the information, say: "
+                    "'I don't have that information in my knowledge base.'\n\n"
                 ),
-                ("human", "Context:\n{context}\n\nQuestion: {question}\n\nAnswer:"),
+                ("human", "Context:\n{context}\n\nUser Question: {question}\n\nProvide a helpful answer based on the context above:"),
             ]
         )
     else:
@@ -126,17 +145,17 @@ def format_prompt_with_context(
             [
                 (
                     "human",
-                    "You are a helpful assistant. Answer the question based on the following context. "
-                    "The context may include documents, questions, and answers from a Q&A system. "
-                    "Use all relevant information from the context to provide a comprehensive answer.\n\n"
-                    "Context:\n{context}\n\nQuestion: {question}\n\nAnswer:",
+                    "You are a helpful assistant. Use the following context to answer the user's question. "
+                    "The context may contain Q&A discussions, documents, or other relevant information. "
+                    "Extract and provide all relevant information from the context that helps answer the question.\n\n"
+                    "Context:\n{context}\n\n"
+                    "User Question: {question}\n\n"
+                    "Answer based on the context:",
                 )
             ]
         )
 
-
     return prompt_template.format_messages(context=context_text, question=query)
-
 
 def generate_response(
     prompt_messages: List[Any],
