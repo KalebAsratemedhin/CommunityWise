@@ -6,7 +6,7 @@ export function Footer() {
 
   return (
     <footer className="border-t bg-foreground text-background">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-lg font-semibold mb-2">{appName}</h3>
@@ -40,7 +40,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-8 pt-6 border-t border-white/10 text-center text-sm opacity-80">
+        <div className="mt-10 pt-8 border-t border-white/10 text-center text-sm opacity-80">
           <p>&copy; {new Date().getFullYear()} {appName}. All rights reserved.</p>
         </div>
       </div>

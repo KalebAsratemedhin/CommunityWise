@@ -3,6 +3,7 @@
 import { FormEvent, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useSignupMutation, useMeQuery } from '@/lib/api';
@@ -50,12 +51,22 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-12">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">{appName}</h1>
-          <p className="text-muted-foreground">Create your account to get started</p>
+      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+        <div className="hidden md:block relative w-full h-full min-h-[500px] rounded-lg overflow-hidden">
+          <Image
+            src="/premium_vector-1682300886606-340e0724b946.avif"
+            alt="Community"
+            fill
+            className="object-contain"
+            unoptimized
+          />
         </div>
-        <div className="border rounded-xl p-8 shadow-sm bg-card">
+        <div className="w-full max-w-md mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">{appName}</h1>
+            <p className="text-muted-foreground">Create your account to get started</p>
+          </div>
+          <div className="border rounded-xl p-8 bg-transparent">
           <h2 className="text-2xl font-semibold mb-6 text-center">
             Create an account
           </h2>
@@ -110,6 +121,7 @@ export default function SignupPage() {
               Sign in
             </button>
           </p>
+          </div>
         </div>
       </div>
     </div>

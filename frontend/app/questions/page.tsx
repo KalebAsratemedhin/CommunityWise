@@ -17,7 +17,7 @@ function QuestionsPage() {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <div className="container max-w-4xl mx-auto py-6 px-4">
+      <div className="container max-w-4xl mx-auto py-2 px-4">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Questions & Answers</h1>
         <Button onClick={() => setShowForm(!showForm)}>
@@ -62,9 +62,9 @@ function QuestionsPage() {
       </div>
 
       {isLoading ? (
-        <div className="text-center py-8 text-muted-foreground">Loading questions...</div>
+        <div className="text-center py-4 text-muted-foreground">Loading questions...</div>
       ) : questions && questions.length > 0 ? (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           {questions.map((question) => (
             <QuestionCard key={question.id} question={question} />
           ))}

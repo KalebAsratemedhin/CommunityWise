@@ -13,7 +13,7 @@ interface QuestionCardProps {
 
 export function QuestionCard({ question }: QuestionCardProps) {
   return (
-    <Link href={`/questions/${question.id}`}>
+    <Link href={`/questions/${question.id}`} className="block">
       <div className="border rounded-lg p-4 hover:bg-accent/50 transition-colors cursor-pointer">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">

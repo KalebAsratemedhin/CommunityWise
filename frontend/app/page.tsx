@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { getFormattedAppName } from '@/lib/app-name';
 
@@ -13,20 +14,35 @@ export default function LandingPage() {
       <main className="flex-1">
         <div style={{ backgroundColor: 'oklch(0.97 0.005 0)' }}>
           <section className="container mx-auto px-4 min-h-[80vh] flex items-center">
-          <div className="max-w-3xl mx-auto text-center w-full py-12">
+          <div className="max-w-6xl mx-auto w-full py-12">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-center md:text-left">
+                <div className="max-w-xl mx-auto md:mx-0">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
               Your Community Knowledge Hub
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Connect, share, and discover knowledge with AI-powered search. Upload documents, ask questions, and build a smarter community together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <Link href="/signup">Get Started</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/login">Sign In</Link>
-              </Button>
+                <p className="text-xl text-muted-foreground mb-8">
+                  Connect, share, and discover knowledge with AI-powered search. Upload documents, ask questions, and build a smarter community together.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                  <Button size="lg" asChild>
+                    <Link href="/signup">Get Started</Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild>
+                    <Link href="/login">Sign In</Link>
+                  </Button>
+                </div>
+                </div>
+              </div>
+              <div className="hidden md:block relative w-full h-full min-h-[400px] rounded-lg overflow-hidden">
+                <Image
+                  src="/premium_vector-1682300886606-340e0724b946.avif"
+                  alt="Community"
+                  fill
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
             </div>
           </div>
           </section>
@@ -35,24 +51,18 @@ export default function LandingPage() {
         {/* Features Section */}
         <div style={{ backgroundColor: 'oklch(0.98 0.012 240)' }}>
           <section className="container mx-auto px-4 min-h-[80vh] flex items-center py-12">
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-6xl mx-auto">
             <h3 className="text-3xl font-bold text-center mb-12">Powerful Features</h3>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 items-center">
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <svg
-                    className="w-8 h-8 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
+                <div className="relative w-full h-48 mb-4 mx-auto rounded-lg overflow-hidden">
+                  <Image
+                    src="/premium_vector-1683141305195-6cdfd5214b49.avif"
+                    alt="Community"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
                 <h4 className="text-xl font-semibold mb-2">Community Knowledge</h4>
                 <p className="text-muted-foreground">
@@ -60,20 +70,14 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <svg
-                    className="w-8 h-8 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                    />
-                  </svg>
+                <div className="relative w-full h-48 mb-4 mx-auto rounded-lg overflow-hidden">
+                  <Image
+                    src="/premium_vector-1745447697638-4cb1ea348dbf.avif"
+                    alt="AI Assistant"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
                 <h4 className="text-xl font-semibold mb-2">AI Assistant</h4>
                 <p className="text-muted-foreground">
@@ -81,20 +85,14 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <svg
-                    className="w-8 h-8 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
+                <div className="relative w-full h-48 mb-4 mx-auto rounded-lg overflow-hidden">
+                  <Image
+                    src="/premium_vector-1763370265947-63ed2860f891.avif"
+                    alt="Documents"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
                 <h4 className="text-xl font-semibold mb-2">Private Documents</h4>
                 <p className="text-muted-foreground">
